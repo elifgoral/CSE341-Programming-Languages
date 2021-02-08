@@ -176,7 +176,7 @@
 			; fact-name
 			(setq str (concatenate 'string (string (code-char 34)) (fact-name buffer) (string (code-char 34))))
 			(push str generatedList)
-			; tek elemanlı fact demek oluyor.
+			; fact has one element
 			(when(equal (fact-secondEntry buffer) nil)
 				;	elemanı kapsayan "("
 				(push (code-char 40) generatedList)
@@ -188,9 +188,9 @@
 				;	elemanı kapatan ")"
 				(push (code-char 41) generatedList)
 			)
-			; 2 elemanlı fact demek oluyor.
+			; fact has two elements
 			(when(not (equal (fact-secondEntry buffer) nil))
-				;	elemanları kapsayan "("
+				; "(" that includes elements
 				(push (code-char 40) generatedList)
 				(if(or (string= (fact-firstEntryType buffer) "variable") (string= (fact-firstEntryType buffer) "objectName"))
 					(setq str (concatenate 'string (string (code-char 34)) (fact-firstEntry buffer) (string (code-char 34))))
@@ -202,10 +202,10 @@
 					(setq str (fact-secondEntry buffer))
 				)	
 				(push str generatedList)
-				;	elemanları kapatan ")"
+				; ")" that closes elements
 				(push (code-char 41) generatedList)
 			)
-			; fact'i kapatan ")"
+			;  ")" that closes fact
 			(push (code-char 41) generatedList)		
 		)
 )
@@ -296,28 +296,28 @@
 		(dolist (buffer factList)
 			(when(string= name (fact-name buffer))
 				(when(and (string= par1 (fact-firstEntry buffer)) (string= par2 (fact-secondEntry buffer)))
-					;	tamamını kapsayan "("
+					; "(" includes all
 					(push (code-char 40) generatedList)
-						;	fact'i kapsan "("
+						; "(" that includes fact
 						(push (code-char 40) generatedList)
 							; fact-name
 							(setq str (concatenate 'string (string (code-char 34)) (fact-name buffer) (string (code-char 34))))
 							(push str generatedList)
-							; tek elemanlı fact demek oluyor.
+							; fact has one element
 							(when(equal (fact-secondEntry buffer) nil)
-								;	elemanı kapsayan "("
+								; "(" that includes elements
 								(push (code-char 40) generatedList)
 								(if(or (string= (fact-firstEntryType buffer) "variable") (string= (fact-firstEntryType buffer) "objectName"))
 									(setq str (concatenate 'string (string (code-char 34)) (fact-firstEntry buffer) (string (code-char 34))))
 									(setq str (fact-firstEntry buffer))
 								)	
 								(push str generatedList)
-								;	elemanı kapatan ")"
+								; ")" that close elements
 								(push (code-char 41) generatedList)
 							)
-							; 2 elemanlı fact demek oluyor.
+							; fact has two element
 							(when(not (equal (fact-secondEntry buffer) nil))
-								;	elemanları kapsayan "("
+								; "(" that includes elements
 								(push (code-char 40) generatedList)
 								(if(or (string= (fact-firstEntryType buffer) "variable") (string= (fact-firstEntryType buffer) "objectName"))
 									(setq str (concatenate 'string (string (code-char 34)) (fact-firstEntry buffer) (string (code-char 34))))
@@ -329,10 +329,10 @@
 									(setq str (fact-secondEntry buffer))
 								)	
 								(push str generatedList)
-								;	elemanları kapatan ")"
+								; ")" that close elements
 								(push (code-char 41) generatedList)
 							)
-							; fact'i kapatan ")"
+							;  ")" that close fact
 							(push (code-char 41) generatedList)
 							
 						(when(equal fromRule 0)
@@ -341,7 +341,7 @@
 							(push (code-char 41) generatedList)
 						)
 					
-					; tamamen fact'i kapatan ")"
+					;  ")" that closes outer fact
 					(push (code-char 41) generatedList)
 				)
 			)
