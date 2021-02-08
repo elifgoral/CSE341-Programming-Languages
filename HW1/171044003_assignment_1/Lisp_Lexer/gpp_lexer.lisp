@@ -14,7 +14,7 @@
 (setq startWithDigit 0)
 (setq includeUnknown 0)
 
-(defvar resultList nil) ; dosyaya yazılacak olanların listesi
+(defvar resultList nil) ; result list for output file
 
 (defun buildList(na to listName)
       (setq bufferStruct (make-Lexer
