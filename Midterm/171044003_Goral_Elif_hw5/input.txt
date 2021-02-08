@@ -1,0 +1,7 @@
+legs(X,2) :- mammal(X), arms(X,2).
+legs(X,4) :- mammal(X), arms(X,0).
+elif(Y,5) :- abc(2,Y), def(Y).
+mammal(horse).
+arms(horse,0).
+arms(horse).
+?- arms(horse,0).
