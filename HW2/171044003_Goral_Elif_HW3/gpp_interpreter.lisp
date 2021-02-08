@@ -14,8 +14,8 @@
 (setq startWithDigit 0)
 (setq includeUnknown 0)
 
-(defvar resultList nil) ; dosyaya yazılacak olanların listesi
-(defvar parserLine nil) ; okunan satırın elemanları(lexer değeri değil.)
+(defvar resultList nil) ; list of the results of output file.
+(defvar parserLine nil) ; elements of line
 (defvar listForRead nil)
 
 
@@ -394,8 +394,8 @@
 (setq flag 0)
 (defvar elements nil)
 
-; 44 = virgül
-; listedeki elemanaları stringe çeviriyor.
+; 44 = comma
+; that function converts the elements of list to the string
 (defun convert (myList)
     (when myList(concatenate 'string (write-to-string(car myList)) (string (code-char 44)) (convert (cdr myList)))
     )
@@ -423,11 +423,11 @@
     (setq op "")
     (defvar opElements nil)
     (setq syntaxControl (isSyntaxOk buffer))
-    ;; eğer error varsa
+    ; If there is an error
     (when(= syntaxControl 0)
         (return-from evaluate 0)
     )
-    ; eğer error yoksa
+    ; If there is no error.
     (unless(= syntaxControl 0)
         (setq str (convert (reverse parserLine)))
         (dolist(buffer (reverse parserLine))
@@ -507,7 +507,7 @@
     (setq parserLine nil)
 )
 
-; sadece 2 sayı için işlem yapıyor.
+; It works for only 2 numbers
 (defun helperEvalForOperator(op opElements)
     (with-open-file (stream "parsed_lisp.txt" :direction :output)
         (when(string= op "OP_PLUS")
@@ -628,9 +628,9 @@
 )
 
 (defun keywordEval(key)
-    (when(equal key "KW_AND")               ;yapıldı
+    (when(equal key "KW_AND")               ;done
         (return-from keywordEval "and")
-    )(when(equal key "KW_OR")               ;yapıldı
+    )(when(equal key "KW_OR")               ;done
         (return-from keywordEval "or")
     )(when(equal key "KW_NOT")
         (return-from keywordEval "not")
@@ -640,10 +640,10 @@
         (return-from keywordEval "less")
     )(when(equal key "KW_NIL")
         (return-from keywordEval "nil")
-    )(when(equal key "KW_LIST")             ;yapıldı
+    )(when(equal key "KW_LIST")             ;done
         (return-from keywordEval "list")
     )(when(equal key "KW_APPEND")
-        (return-from keywordEval "append")  ;yapıldı
+        (return-from keywordEval "append")  ;done
     )(when(equal key "KW_CONCAT")
         (return-from keywordEval "concat")
     )(when(equal key "KW_SET")
